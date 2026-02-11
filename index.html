@@ -895,10 +895,6 @@
                 <div class="timeline-content">The day everything started. The day I asked you to be mine, and you said yes. I remember being so nervous, but also so sure that this was right.</div>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-date">Our First Kisses</div>
-                <div class="timeline-content">Remember how we'd kiss and then just stay there, not moving, for a few seconds? And then we'd both start laughing? I love that. I love how comfortable we are together, how we can be silly and romantic at the same time. Those moments mean everything to me.</div>
-            </div>
 
             <div class="timeline-item">
                 <div class="timeline-date">The Gifts You Gave Me</div>
@@ -906,7 +902,7 @@
             </div>
 
             <div class="timeline-item">
-                <div class="timeline-date">Valentine's Day 2025</div>
+                <div class="timeline-date">3 Days before Valentine's Day</div>
                 <div class="timeline-content">The day I let you down. But also the day I realized I need to do better. Not just with gifts, but with showing you every day how much you mean to me.</div>
             </div>
 
@@ -1139,30 +1135,42 @@
             "I promise to do better"
         ];
 
-        // Countdown Timer
-        function updateCountdown() {
-            const targetDate = new Date('2025-02-28T00:00:00').getTime();
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+      // Countdown Timer
+function updateCountdown() {
+    const targetDate = new Date('2026-02-28T00:00:00').getTime();
+    const now = new Date().getTime();
+    const distance = targetDate - now;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    if (distance <= 0) {
+        document.querySelector('.countdown-title').textContent = 
+            "We've Been Together For 2 Months! ♡";
 
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
-            document.getElementById('seconds').textContent = seconds;
+        document.getElementById('days').textContent = "0";
+        document.getElementById('hours').textContent = "0";
+        document.getElementById('minutes').textContent = "0";
+        document.getElementById('seconds').textContent = "0";
 
-            if (distance < 0) {
-                document.querySelector('.countdown-title').textContent = "We've Been Together For 2 Months! ♡";
-                document.getElementById('days').textContent = "0";
-                document.getElementById('hours').textContent = "0";
-                document.getElementById('minutes').textContent = "0";
-                document.getElementById('seconds').textContent = "0";
-            }
-        }
+        clearInterval(countdownInterval);
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('days').textContent = days;
+    document.getElementById('hours').textContent = hours;
+    document.getElementById('minutes').textContent = minutes;
+    document.getElementById('seconds').textContent = seconds;
+}
+
+// Run immediately once
+updateCountdown();
+
+// Update every second
+const countdownInterval = setInterval(updateCountdown, 1000);
+
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
