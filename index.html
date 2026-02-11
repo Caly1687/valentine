@@ -809,7 +809,7 @@
                 <div class="flower-center"></div>
             </div>
         </div>
-        <div class="click-hint">Click to begin ♡</div>
+        <div class="click-hint">Click above to begin ♡</div>
     </div>
 
     <!-- Plant Flower Button -->
@@ -1134,15 +1134,16 @@
             "You're my favorite person",
             "I promise to do better"
         ];
+// Countdown Timer
+let countdownInterval;
 
-      // Countdown Timer
 function updateCountdown() {
     const targetDate = new Date('2025-12-30T00:00:00').getTime();
     const now = new Date().getTime();
     const distance = targetDate - now;
 
     if (distance <= 0) {
-        document.querySelector('.countdown-title').textContent = 
+        document.querySelector('.countdown-title').textContent =
             "We've Been Together For 2 Months! ♡";
 
         document.getElementById('days').textContent = "0";
@@ -1165,14 +1166,9 @@ function updateCountdown() {
     document.getElementById('seconds').textContent = seconds;
 }
 
-// Run immediately once
+countdownInterval = setInterval(updateCountdown, 1000);
 updateCountdown();
-
-// Update every second
-const countdownInterval = setInterval(updateCountdown, 1000);
-
-
-        setInterval(updateCountdown, 1000);
+       
         updateCountdown();
 
         // Typing animation finish
