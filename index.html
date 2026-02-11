@@ -30,6 +30,41 @@
             overflow-x: hidden;
         }
 
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1500;
+            display: none;
+            box-shadow: 0 2px 20px rgba(255, 179, 198, 0.2);
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 0 20px;
+        }
+
+        .progress-bar.visible {
+            display: flex;
+        }
+
+        .progress-heart {
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            opacity: 0.3;
+            filter: grayscale(100%);
+        }
+
+        .progress-heart.active {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.2);
+        }
+
         /* Wax Seal Opening Screen */
         #wax-seal-screen {
             position: fixed;
@@ -515,6 +550,132 @@
             font-style: italic;
         }
 
+        /* Photo Gallery */
+        .photo-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .photo-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .photo-row.single {
+            grid-template-columns: 1fr;
+        }
+
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            aspect-ratio: 1;
+            box-shadow: 0 5px 20px rgba(255, 179, 198, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(255, 179, 198, 0.4);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--rose-light), white);
+            color: var(--rose-dark);
+        }
+
+        /* Future Timeline */
+        .future-timeline {
+            margin-top: 40px;
+        }
+
+        .future-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 212, 224, 0.3));
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border-left: 5px solid var(--rose-dark);
+            box-shadow: 0 5px 20px rgba(255, 179, 198, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .future-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 30px rgba(255, 179, 198, 0.3);
+        }
+
+        .future-time {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--rose-dark);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .future-description {
+            font-size: 1.2rem;
+            line-height: 1.9;
+        }
+
+        /* Places Section */
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .place-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(255, 179, 198, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .place-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 179, 198, 0.4);
+        }
+
+        .place-icon {
+            font-size: 4rem;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--rose-light), var(--rose));
+            text-align: center;
+        }
+
+        .place-content {
+            padding: 30px;
+        }
+
+        .place-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--rose-dark);
+            margin-bottom: 15px;
+        }
+
+        .place-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
         .timeline-item {
             margin: 40px 0;
             padding-left: 40px;
@@ -780,10 +941,30 @@
             .time-number {
                 font-size: 2rem;
             }
+            .progress-heart {
+                font-size: 1.3rem;
+            }
+            .progress-bar {
+                gap: 8px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar">
+        <span class="progress-heart" data-section="0">💕</span>
+        <span class="progress-heart" data-section="1">💕</span>
+        <span class="progress-heart" data-section="2">💕</span>
+        <span class="progress-heart" data-section="3">💕</span>
+        <span class="progress-heart" data-section="4">💕</span>
+        <span class="progress-heart" data-section="5">💕</span>
+        <span class="progress-heart" data-section="6">💕</span>
+        <span class="progress-heart" data-section="7">💕</span>
+        <span class="progress-heart" data-section="8">💕</span>
+        <span class="progress-heart" data-section="9">💕</span>
+    </div>
+
     <!-- Wax Seal Screen -->
     <div id="wax-seal-screen">
         <div class="envelope">
@@ -825,16 +1006,16 @@
     <div id="main-content">
         <h1 id="main-title" class="typing">For Rayza ♡</h1>
 
-        <!-- Countdown Section -->
-        <div class="countdown-section fade-in">
+        <!-- Section 0: Countdown -->
+        <div class="countdown-section fade-in" data-section="0">
             <div class="countdown-title">Time Until We've Been Together For 2 Months</div>
             <div class="countdown-timer">
                 <div class="time-unit">
-                    <div class="time-number" id="days">9</div>
+                    <div class="time-number" id="days">--</div>
                     <div class="time-label">Days</div>
                 </div>
                 <div class="time-unit">
-                    <div class="time-number" id="hours">19</div>
+                    <div class="time-number" id="hours">--</div>
                     <div class="time-label">Hours</div>
                 </div>
                 <div class="time-unit">
@@ -849,7 +1030,8 @@
             <p style="margin-top: 20px; font-style: italic;">February 28th, 2025 ♡</p>
         </div>
 
-        <div class="section fade-in">
+        <!-- Section 1: Letter -->
+        <div class="section fade-in" data-section="1">
             <p class="letter">
                 Rayza,
             </p>
@@ -864,8 +1046,9 @@
             </p>
         </div>
 
-        <h2 class="fade-in">What I Learned From Messing Up</h2>
-        <div class="section fade-in">
+        <!-- Section 2: Lessons -->
+        <h2 class="fade-in" data-section="2">What I Learned From Messing Up</h2>
+        <div class="section fade-in" data-section="2">
             <div class="lesson-item">
                 <div class="lesson-number">Lesson 1</div>
                 <div class="lesson-text">Actions speak louder than words. You showing up with gifts wasn't just about the items - it showed you were thinking about me, planning for me. I need to do the same.</div>
@@ -888,33 +1071,129 @@
             </div>
         </div>
 
-        <h2 class="fade-in">Our Story So Far</h2>
-        <div class="section fade-in">
+        <!-- Section 3: Photo Gallery -->
+        <h2 class="fade-in" data-section="3">Us ♡</h2>
+        <div class="section fade-in" data-section="3">
+            <p style="margin-bottom: 30px; font-style: italic;">Every moment with you is a memory I treasure</p>
+            <div class="photo-gallery">
+                <div class="photo-row">
+                    <div class="photo-item">
+                        <div class="photo-placeholder">📸</div>
+                    </div>
+                    <div class="photo-item">
+                        <div class="photo-placeholder">📸</div>
+                    </div>
+                </div>
+                <div class="photo-row">
+                    <div class="photo-item">
+                        <div class="photo-placeholder">📸</div>
+                    </div>
+                    <div class="photo-item">
+                        <div class="photo-placeholder">📸</div>
+                    </div>
+                </div>
+                <div class="photo-row single">
+                    <div class="photo-item">
+                        <img src="https://raw.githubusercontent.com/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design/4deb8bcc647405c180e1810c0d3292b15a1d5d53/uploads/2026-02-11T20-44-43-717Z-jx06bq788.png" alt="Us">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Our Future -->
+        <h2 class="fade-in" data-section="4">Where We'll Be</h2>
+        <div class="section fade-in" data-section="4">
+            <div class="future-timeline">
+                <div class="future-item">
+                    <div class="future-time">In 6 Months (August 2025)</div>
+                    <div class="future-description">We'll have celebrated our first half-year together. I'll have made up for Valentine's Day a hundred times over. We'll have so many more inside jokes, so many more memories of laughing together during those still kisses. We'll know each other even better than we do now.</div>
+                </div>
+                <div class="future-item">
+                    <div class="future-time">In 1 Year (December 30th, 2025)</div>
+                    <div class="future-description">Our one-year anniversary. A whole year of you and me. I'll plan something special, something that shows I've learned from my mistakes. We'll look back at this website and smile at how far we've come. I'll have kept every promise I made to you here.</div>
+                </div>
+                <div class="future-item">
+                    <div class="future-time">In 5 Years (2030)</div>
+                    <div class="future-description">We'll have built something beautiful together. All those dreams we talk about? We'll be living them. We'll have traveled to places we've only imagined. We'll still be making each other laugh, still growing together, still choosing each other every single day.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Places We'll Go -->
+        <h2 class="fade-in" data-section="5">Places We'll Go</h2>
+        <div class="section fade-in" data-section="5">
+            <p style="margin-bottom: 30px; font-style: italic;">Adventures I want to share with you</p>
+            <div class="places-grid">
+                <div class="place-card">
+                    <div class="place-icon">🌍</div>
+                    <div class="place-content">
+                        <div class="place-title">Travel The World</div>
+                        <div class="place-description">Explore new cities, try new foods, get lost in new streets. Just you and me discovering the world together.</div>
+                    </div>
+                </div>
+                <div class="place-card">
+                    <div class="place-icon">🧺</div>
+                    <div class="place-content">
+                        <div class="place-title">Picnics Everywhere</div>
+                        <div class="place-description">Parks, beaches, mountains. Doesn't matter where - just a blanket, some food, and quality time with you.</div>
+                    </div>
+                </div>
+                <div class="place-card">
+                    <div class="place-icon">🌅</div>
+                    <div class="place-content">
+                        <div class="place-title">Sunrise & Sunsets</div>
+                        <div class="place-description">Watch the world wake up and fall asleep together. The quiet moments where it's just us and the sky.</div>
+                    </div>
+                </div>
+                <div class="place-card">
+                    <div class="place-icon">🏖️</div>
+                    <div class="place-content">
+                        <div class="place-title">Beach Getaways</div>
+                        <div class="place-description">Sand, waves, and long walks by the ocean. Building sandcastles and making memories.</div>
+                    </div>
+                </div>
+                <div class="place-card">
+                    <div class="place-icon">🎡</div>
+                    <div class="place-content">
+                        <div class="place-title">Random Adventures</div>
+                        <div class="place-description">Amusement parks, road trips, spontaneous drives to nowhere. Every adventure is better with you.</div>
+                    </div>
+                </div>
+                <div class="place-card">
+                    <div class="place-icon">🌃</div>
+                    <div class="place-content">
+                        <div class="place-title">City Nights</div>
+                        <div class="place-description">Exploring cities after dark, finding hidden spots, late-night food runs, making the night ours.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Our Story -->
+        <h2 class="fade-in" data-section="6">Our Story So Far</h2>
+        <div class="section fade-in" data-section="6">
             <div class="timeline-item">
                 <div class="timeline-date">December 30th, 2024</div>
                 <div class="timeline-content">The day everything started. The day I asked you to be mine, and you said yes. I remember being so nervous, but also so sure that this was right.</div>
             </div>
-
-
             <div class="timeline-item">
                 <div class="timeline-date">The Gifts You Gave Me</div>
                 <div class="timeline-content">Two presents before Valentine's Day. You're always thinking of me, always showing me you care. I should have done the same. I should have shown you that you're on my mind just as much.</div>
             </div>
-
             <div class="timeline-item">
                 <div class="timeline-date">3 Days before Valentine's Day</div>
                 <div class="timeline-content">The day I let you down. But also the day I realized I need to do better. Not just with gifts, but with showing you every day how much you mean to me.</div>
             </div>
-
             <div class="timeline-item">
                 <div class="timeline-date">Today</div>
                 <div class="timeline-content">The day I'm trying to make it right. I'm making you this because I want you to know: I see you, I appreciate you, and I'm so lucky to have you.</div>
             </div>
         </div>
 
-        <h2 class="fade-in">My Promises To You</h2>
-        <div class="section fade-in">
-            <p style="text-align: center; margin-bottom: 30px; font-style: italic;">Click each promise to see it ♡</p>
+        <!-- Section 7: Promises -->
+        <h2 class="fade-in" data-section="7">My Promises To You</h2>
+        <div class="section fade-in" data-section="7">
+            <p style="text-align: center; margin-bottom: 30px; font-style: italic;">Hover over each promise ♡</p>
             <div class="promise-jar">
                 <div class="promise">
                     <div class="promise-text">I promise to never show up empty-handed on important days again</div>
@@ -943,8 +1222,9 @@
             </div>
         </div>
 
-        <h2 class="fade-in">Things I Want To Do With You</h2>
-        <div class="section fade-in">
+        <!-- Section 8: Things To Do -->
+        <h2 class="fade-in" data-section="8">Things I Want To Do With You</h2>
+        <div class="section fade-in" data-section="8">
             <div class="dreams-list">
                 <div class="dream-item">
                     <div class="dream-title">Take you on a proper date</div>
@@ -973,8 +1253,9 @@
             </div>
         </div>
 
-        <h2 class="fade-in">30 Reasons I Love You</h2>
-        <div class="section fade-in">
+        <!-- Section 9: 30 Reasons -->
+        <h2 class="fade-in" data-section="9">30 Reasons I Love You</h2>
+        <div class="section fade-in" data-section="9">
             <p style="text-align: center; margin-bottom: 40px; font-style: italic;">One for every day since December 30th, when you became mine ♡</p>
             
             <div class="reasons-grid">
@@ -1134,42 +1415,73 @@
             "You're my favorite person",
             "I promise to do better"
         ];
-// Countdown Timer
-let countdownInterval;
 
-function updateCountdown() {
-    const targetDate = new Date('2025-12-30T00:00:00').getTime();
-    const now = new Date().getTime();
-    const distance = targetDate - now;
+        // Countdown Timer
+        let countdownInterval;
 
-    if (distance <= 0) {
-        document.querySelector('.countdown-title').textContent =
-            "We've Been Together For 2 Months! ♡";
+        function updateCountdown() {
+            const targetDate = new Date('2025-02-28T00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-        document.getElementById('days').textContent = "0";
-        document.getElementById('hours').textContent = "0";
-        document.getElementById('minutes').textContent = "0";
-        document.getElementById('seconds').textContent = "0";
+            if (distance <= 0) {
+                document.querySelector('.countdown-title').textContent =
+                    "We've Been Together For 2 Months! ♡";
+                document.getElementById('days').textContent = "0";
+                document.getElementById('hours').textContent = "0";
+                document.getElementById('minutes').textContent = "0";
+                document.getElementById('seconds').textContent = "0";
+                clearInterval(countdownInterval);
+                return;
+            }
 
-        clearInterval(countdownInterval);
-        return;
-    }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
 
-    document.getElementById('days').textContent = days;
-    document.getElementById('hours').textContent = hours;
-    document.getElementById('minutes').textContent = minutes;
-    document.getElementById('seconds').textContent = seconds;
-}
-
-countdownInterval = setInterval(updateCountdown, 1000);
-updateCountdown();
-       
+        countdownInterval = setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        // Progress Bar
+        function updateProgressBar() {
+            const sections = document.querySelectorAll('[data-section]');
+            const progressHearts = document.querySelectorAll('.progress-heart');
+            const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+            sections.forEach((section, index) => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    progressHearts.forEach((heart, heartIndex) => {
+                        if (heartIndex <= index) {
+                            heart.classList.add('active');
+                        } else {
+                            heart.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            
+            // Show progress bar after scrolling down
+            const progressBar = document.getElementById('progressBar');
+            if (window.scrollY > 200) {
+                progressBar.classList.add('visible');
+            } else {
+                progressBar.classList.remove('visible');
+            }
+        });
 
         // Typing animation finish
         setTimeout(() => {
